@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<body>
+{% for table in query_tables %}
+    <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    <fieldset>
+        <div>
+            <button type="submit" name=table_index value="{{forloop.counter0}}"> SELECT</button>
+        </div>
+
+        <li name="flight_no" value="{{table.flight_no}}">{{table.flight_no}}</li>
+        <li name="src_airport" value="{{table.src_airport}}">{{table.src_airport}}</li>
+        <li name="src_time" value="{{table.src_time}}">{{table.src_time}}</li>
+        <li name="dst_airport" value="{{table.dst_airport}}">{{table.dst_airport}}</li>
+        <li name="dst_time" value="{{table.dst_time}}">{{table.dst_time}}</li>
+
+    </fieldset>
+    </form>
+{% endfor %}
+
+
+</body>
+</html>

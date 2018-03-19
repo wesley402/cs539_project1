@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+    <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    {% for i in range %}
+    <fieldset>
+        <legend><strong> Traveler {{i}} </strong></legend>
+        <label class="name" name="first-name-label">First name</label></br>
+        <input type="text" name="first-name" class="name" placeholder=""></br>
+        <label class="name" name="last-name-label">Last name</label></br>
+        <input type="text" name="last-name" class="name" placeholder="" ></br>
+
+    </fieldset>
+    {% endfor %}
+    <div>
+        <button type="submit" name=table_index> CONFIRM YOUR BOOKING</button>
+    </div>
+    </form>
+
+
+</body>
+</html>
