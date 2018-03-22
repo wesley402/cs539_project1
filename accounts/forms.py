@@ -42,8 +42,6 @@ class UserRegisterForm(forms.ModelForm):
 
         ]
 
-
-
     def clean(self, *args, **kwargs):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get('password')
@@ -56,3 +54,11 @@ class UserRegisterForm(forms.ModelForm):
         if username_qs.exists():
             raise forms.ValidationError("This usename has already been registered")
         return super(UserRegisterForm, self).clean(*args, **kwargs)
+
+'''class UserProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            'first_name'
+            'last_name'
+        )'''

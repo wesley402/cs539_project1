@@ -11,7 +11,7 @@ from .forms import UserLoginForm, UserRegisterForm
 
 def signin(request):
     next = request.GET.get('next')
-    title = "Signin"
+    title = "SIGN IN"
     form = UserLoginForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data.get("username")
@@ -26,7 +26,7 @@ def signin(request):
 
 def signup(request):
     next = request.GET.get('next')
-    title = "Signup"
+    title = "SIGN UP"
     form = UserRegisterForm(request.POST or None)
     if form.is_valid():
         user = form.save(commit=False)
@@ -48,4 +48,8 @@ def signup(request):
 
 def signout(request):
     logout(request)
-    return redirect("/")
+    return redirect("/signin")
+
+def profile(request):
+    context = {'user': request.user}
+    return render(request, 'accounts/profile.html', context)

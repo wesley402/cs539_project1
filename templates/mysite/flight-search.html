@@ -1,5 +1,15 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
+
+<style>
+body, html {
+    margin-top:40px;
+}
+
+</style>
+
 <html>
 <body>
 {% for table in query_tables %}
@@ -18,7 +28,7 @@
     </fieldset>
     </form>
 {% endfor %}
-
-
 </body>
 </html>
+
+{% endblock content %}

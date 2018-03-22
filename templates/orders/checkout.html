@@ -1,5 +1,18 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
 
+<style>
+body, html {
+    margin-top:50px;
+
+}
+button {
+    margin-left:2px;
+
+}
+
+</style>
 <html>
 <body>
     <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
@@ -21,3 +34,4 @@
 
 </body>
 </html>
+{% endblock content %}

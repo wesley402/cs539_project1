@@ -8,6 +8,13 @@
 {% block content %}
 
 {% if not user.is_authenticated %}
+<style>
+p {
+	margin-top: 60px;
+	font-size: 50px;
+	text-align: center;
+}
+</style>
 	<p>Please Sign in first!!</p>
 {%else %}
 
@@ -26,7 +33,7 @@
 
 </head>
 <body>
-	<h1>Flight Ticket Booking</h1>
+ 	<h1>Flight Ticket Booking</h1>
 	<div class="main-agileinfo">
 		<div class="sap_tabs">
 			<div id="horizontalTab">
@@ -34,6 +41,7 @@
 					<li class="resp-tab-item"><span>Round Trip</span></li>
 					<li class="resp-tab-item"><span>One way</span></li>
 					<li class="resp-tab-item"><span>Multi city</span></li>
+					<li class="resp-tab-item"><a href="{% url 'best-seller' %}"><span>Best Sellers</span></a></li>
 				</ul>
 				<div class="clearfix"> </div>
 				<div class="resp-tabs-container">
@@ -41,24 +49,24 @@
 						<form action="{% url 'flight-search' %}" method="GET">{% csrf_token %}
 							<div class="from">
 								<h3>From</h3>
-								<input type="text" name="city1" class="city" placeholder="Type Departure City" required="">
+								<input type="text" name="from" class="city1" placeholder="Type Departure City" required="">
 							</div>
 							<div class="to">
 								<h3>To</h3>
-								<input type="text" name="city2" class="city" placeholder="Type Destination City" required="">
+								<input type="text" name="to" class="city2" placeholder="Type Destination City" required="">
 							</div>
 							<div class="clear"></div>
 							<div class="date">
 								<div class="depart">
 									<h3>Depart</h3>
-									<input  id="datepicker" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									<input  id="datepicker" name="Text" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
 									<span class="checkbox1">
 										<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>Flexible with date</label>
 									</span>
 								</div>
 								<div class="return">
 									<h3>Return</h3>
-									<input  id="datepicker1" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									<input  id="datepicker1" name="Text" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
 									<span class="checkbox1">
 										<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>Flexible with date</label>
 									</span>
@@ -103,38 +111,36 @@
 							<input type="submit" value="Search Flights">
 						</form>
 					</div>
+
 					<div class="tab-1 resp-tab-content oneway">
 						<form action="{% url 'flight-search' %}" method="GET">{% csrf_token %}
 							<div class="from">
 								<h3>From</h3>
-								<input type="text" name="city1" class="city" placeholder="Type Departure City" required="">
+								<input type="text" name="from" class="city1" placeholder="Type Departure City" required="">
 							</div>
 							<div class="to">
 								<h3>To</h3>
-								<input type="text" name="city2" class="city" placeholder="Type Destination City" required="">
+								<input type="text" name="to" class="city2" placeholder="Type Destination City" required="">
 							</div>
 							<div class="clear"></div>
 							<div class="date">
 								<div class="depart">
 									<h3>Depart</h3>
-									<input class="date" id="datepicker2" name="Text" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									<input class="date" id="datepicker2" name="dep_date" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
 									<span class="checkbox1">
 										<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>Flexible with date</label>
 									</span>
 								</div>
 							</div>
-							<!--
 							<div class="class">
 								<h3>Class</h3>
-								<select id="w3_country1" onchange="change_country(this.value)" class="frm-field required">
-									<option value="null">Economy</option>
-									<option value="null">Premium Economy</option>
-									<option value="null">Business</option>
-									<option value="null">First class</option>
+								<select id="w3_country1" name="cabin" onchange="change_country(this.value)" class="frm-field required">
+									<option value="Economy">Economy</option>
+									<option value="Premium_Economy">Premium Economy</option>
+									<option value="Business">Business</option>
+									<option value="First_class">First class</option>
 								</select>
-
 							</div>
-						 	-->>
 							<div class="clear"></div>
 							<div class="numofppl">
 								<div class="adults">
@@ -167,12 +173,11 @@
 								</div>
 								-->
 								<div class="clear"></div>
-							</div>
 							<div class="clear"></div>
-							<input type="submit" value="Search Flights">
+							<button type="submit" name = "trip" value="oneway">Search Flights</button>
 						</form>
-
 					</div>
+
 					<div class="tab-1 resp-tab-content multicity">
 
 									<form action="#" method="post">{% csrf_token %}
@@ -265,7 +270,7 @@
 							<input type="submit" value="Search Flights">
 							</form>
 						</ul>
-					</div>
+						</div>
 					</div>
 
 				</div>
