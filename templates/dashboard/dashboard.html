@@ -1,0 +1,89 @@
+{% extends 'dashboard/base.html' %} 
+{% block content%}
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-header">
+          Actions
+        </div>
+        <div class="card-body">
+          <a class="nav-link" href="{% url 'flight' %}">View all flight information</a>
+          <a class="nav-link" href="{% url 'reservation' %}">View all reservations</a>
+          <a class="nav-link" href="{% url 'customer' %}">Add/Edit/Delete Customer Information</a>
+          <a class="nav-link disabled" href="#">Generate Sales Report</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-header">
+          Flights
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th scope="row">Flight Count</th>
+                <td>341</td>
+              </tr>
+              <tr>
+                <th scope="row">Delayed</th>
+                <td class="text-danger">17</td>
+              </tr>
+              <tr>
+                <th scope="row">On Time</th>
+                <td class="text-success">324</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-header">
+          Airlines
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th scope="row">Airlines Operating Today</th>
+                <td>12</td>
+              </tr>
+              <tr>
+                <th scope="row">Reservation Count</th>
+                <td>441</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-header">
+          Customers
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th scope="row">Customers Flying Today</th>
+                <td>638</td>
+              </tr>
+              <tr>
+                <th scope="row">Customers Delayed</th>
+                <td class="text-danger">84</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}
