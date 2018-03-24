@@ -87,9 +87,9 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-        'USER':'kuowei',
-        'PASSWORD':'123456789',
-        'HOST': 'cs539.cwi1gs5ytn4y.us-east-1.rds.amazonaws.com',
+        'USER':'root',
+        'PASSWORD':'root123',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
