@@ -87,9 +87,12 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-        'USER':'kuowei',
-        'PASSWORD':'123456789',
-        'HOST': 'cs539.cwi1gs5ytn4y.us-east-1.rds.amazonaws.com',
+        #'USER':'kuowei',
+        #'PASSWORD':'123456789',
+        #'HOST': 'cs539.cwi1gs5ytn4y.us-east-1.rds.amazonaws.com',
+        'USER':'root',
+        'PASSWORD':'3587666',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
@@ -140,4 +143,3 @@ STATICFILES_FINDERS = (
 )
 
 STATIC_URL = '/static/'
-#AUTH_USER_MODEL = 'accounts.User'

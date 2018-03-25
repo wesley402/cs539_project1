@@ -36,6 +36,7 @@ urlpatterns = [
     path('signup/',accounts_views.signup, name = 'signup'),
     path('signout/',accounts_views.signout, name = 'signout'),
     path('profile/', accounts_views.profile, name='profile'),
+    path('profile/edit', accounts_views.edit_profile, name='edit_profile'),
 
     path('flight-search/', home_views.searchResults, name='flight-search'),
     path('flight-information/', home_views.flightInfo, name='flight-information'),

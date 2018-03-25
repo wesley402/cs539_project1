@@ -35,17 +35,19 @@ body, html {
     <label class="l_profile" name="last-name-label">Last name</label></br>
     <p>{{ user.last_name }}</p>
     <label class="l_profile" name="Adress">Address</label></br>
-    <p>{{ user.address }}</p>
+    <p>{{ profile.address }}</p>
     <label class="name" name="last-name-label">City</label></br>
-    <p>{{ user.city }}</p>
+    <p>{{ profile.city }}</p>
     <label class="l_profile" name="first-name-label">State</label></br>
-    <p>{{ user.State }}</p>
+    <p>{{ profile.State }}</p>
     <label class="l_profile" name="last-name-label">Zip Code</label></br>
-    <p>{{ user.zip_code }}</p>
-    <label class="l_profile" name="last-name-label">Phone No</label></br>
-    <p>{{ user.telephone }}</p>
-    <label class="l_profile" name="last-name-label">Credit Card No</label></br>
-    <p>{{ user.credit_card }}</p>
+    <p>{{ profile.zip_code }}</p>
+    <label class="l_profile" name="last-name-label">Telephone</label></br>
+    <p>{{ profile.telephone }}</p>
+    <label class="l_profile" name="last-name-label">Credit card</label></br>
+    <p>{{ profile.credit_card }}</p>
+    </br>
+    <button type="submit" name = "edit" value=""><a href="{% url 'edit_profile' %}">Edit</button>
 </body>
 </html>
 

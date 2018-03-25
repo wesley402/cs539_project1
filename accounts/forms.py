@@ -5,9 +5,10 @@ from django.contrib.auth import (
     login,
     logout,
     )
+from django.contrib.auth.models import User
+#from django.db.models import Profile
+from django.apps import apps
 
-
-User = get_user_model()
 
 class UserLoginForm(forms.Form):
     username = forms.CharField()
@@ -16,7 +17,6 @@ class UserLoginForm(forms.Form):
     def clean(self, *args, **kwargs):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
-
         if username and password:
             user = authenticate(username=username, password=password)
             if not user:
@@ -55,10 +55,37 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError("This usename has already been registered")
         return super(UserRegisterForm, self).clean(*args, **kwargs)
 
-'''class UserProfileUpdateForm(forms.ModelForm):
+class EditUserForm(forms.ModelForm):
+
     class Meta:
         model = User
         fields = (
-            'first_name'
-            'last_name'
-        )'''
+            'username',
+            'date_joined',
+            'first_name',
+            'last_name',
+            'email',
+        )
+        exclude = (
+            'username',
+            'date_joined',
+        )
+        help_texts = {
+            'username': None,
+            'email': None,
+            'first_name': None,
+            'last_name': None,
+            'date_joined': None,
+        }
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model =  apps.get_model('accounts', 'Profile')
+        fields = (
+            'address',
+            'city',
+            'state',
+            'zip_code',
+            'telephone',
+            'credit_card',
+        )
