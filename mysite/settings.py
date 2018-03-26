@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'ulf4=l-h5@3cl@1##f$rfevgm36w)%zb!b7#3v&!9e^bikzlsp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,7 +87,16 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+        'USER':'admin',
+        'PASSWORD':'12345678',
+        'HOST': 'mydatabase.cayksbsz2qlt.us-east-2.rds.amazonaws.com',
 
+
+
+        #'USER':'root',
+        #'PASSWORD':'3587666',
+        #'HOST': '127.0.0.1',
+        #'PORT': '3306',
     }
 }
 
