@@ -88,4 +88,7 @@ class EditProfileForm(forms.ModelForm):
             'zip_code',
             'telephone',
             'credit_card',
+            'seat_preference',
+            'meal_preference',
+
         )

@@ -4,6 +4,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Profile(models.Model):
+    SEAT_PREFERENCES = (
+        ('none','No Preference'),
+        ('window','Window Seat'),
+        ('isle','Isle Seat'),
+    )
+    MEAL_PREFERENCES = (
+        ('none','No Preference'),
+        ('veg','Vegitarian'),
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=30, blank=True)
@@ -11,6 +21,9 @@ class Profile(models.Model):
     zip_code = models.CharField(max_length=30, blank=True)
     telephone = models.CharField(max_length=30, blank=True)
     credit_card = models.CharField(max_length=30, blank=True)
+    seat_preference = models.CharField(max_length=30, default='none', blank=False, choices=SEAT_PREFERENCES)
+    meal_preference = models.CharField(max_length=30, default='none', blank=False, choices=MEAL_PREFERENCES)
+
 
 
 @receiver(post_save, sender=User)

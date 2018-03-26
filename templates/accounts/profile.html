@@ -39,14 +39,17 @@ body, html {
     <label class="name" name="last-name-label">City</label></br>
     <p>{{ profile.city }}</p>
     <label class="l_profile" name="first-name-label">State</label></br>
-    <p>{{ profile.State }}</p>
+    <p>{{ profile.state }}</p>
     <label class="l_profile" name="last-name-label">Zip Code</label></br>
     <p>{{ profile.zip_code }}</p>
     <label class="l_profile" name="last-name-label">Telephone</label></br>
     <p>{{ profile.telephone }}</p>
     <label class="l_profile" name="last-name-label">Credit card</label></br>
     <p>{{ profile.credit_card }}</p>
-    </br>
+    <label class="l_profile" name="last-name-label">Seat Preference</label></br>
+    <p>{{ profile.seat_preference }}</p>
+    <label class="l_profile" name="last-name-label">Meal Preference</label></br>
+    <p>{{ profile.meal_preference }}</p>
     <button type="submit" name = "edit" value=""><a href="{% url 'edit_profile' %}">Edit</button>
 </body>
 </html>

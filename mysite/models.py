@@ -2,19 +2,29 @@ from django.db import models
 
 # Create your models here.
 class Airline(models.Model):
-    name = models.CharField(max_length=60)
-    iata = models.CharField(max_length=2, null=True)
-    icao = models.CharField(max_length=3, null=True)
+    id = models.CharField(primary_key=True, max_length=2, blank=False)
+    name = models.CharField(max_length=100)
 
-
-
+class Airport(models.Model):
+    id = models.CharField(primary_key=True, max_length=3, blank=False)
+    name = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    country = models.CharField(max_length=40, blank=True)
 
 class Route(models.Model):
-    flight_no = models.CharField(max_length=10, null=False)
-    src_airport = models.CharField(max_length=4, null=False)
-    dst_airport = models.CharField(max_length=4, null=False)
+    flight_no = models.IntegerField(null=False)
+    stop_no = models.IntegerField(null=False)
+    airline_id = models.CharField(max_length= 4, blank=True)
+    src_airport = models.CharField(max_length=4, blank=True)
+    dst_airport = models.CharField(max_length=4, blank=True)
+    num_of_seats = models.IntegerField(null=True)
     num_of_stops = models.IntegerField(null=True)
     src_time = models.TimeField(null=False)
     dst_time = models.TimeField(null=False)
-    #Fares = models.IntegerField(null=True)
-    #Working_days = models.CharField(null=False)
+    arrive_day = models.IntegerField(null=True)
+    working_days = models.CharField(max_length=40, blank=False)
+    fare = models.FloatField(null=True)
+    fare_restriction = models.CharField(max_length=40, blank=False)
+    #airline_id = models.ForeignKey(Airline, related_name='airline_route_id', on_delete=models.CASCADE)
+    #src_airport = models.ForeignKey(Airport, related_name='airport_route_id', on_delete=models.CASCADE)
+    #dst_airport = models.ForeignKey(Airport, related_name='airport_id', on_delete=models.CASCADE)

@@ -3,7 +3,7 @@ from .models import Airline, Route
 # Register your models here.
 
 class AirlineAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "iata", "icao"]
+    list_display = ["id", "name"]
 
 class RouteAdmin(admin.ModelAdmin):
     list_display = ["flight_no"]
