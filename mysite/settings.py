@@ -86,7 +86,14 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+<<<<<<< HEAD
+        'USER':'root',
+        'PASSWORD':'root123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+=======
 
+>>>>>>> master
     }
 }
 
