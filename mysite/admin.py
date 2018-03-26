@@ -1,10 +1,12 @@
 from django.contrib import admin
-from .models import Airline
+from .models import Airline, Route
 # Register your models here.
 
 class AirlineAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "iata", "icao"]
+    list_display = ["id", "name"]
 
+class RouteAdmin(admin.ModelAdmin):
+    list_display = ["flight_no"]
 
-
+admin.site.register(Route, RouteAdmin)
 admin.site.register(Airline, AirlineAdmin)

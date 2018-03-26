@@ -50,8 +50,9 @@ def flightInfo(request):
     table_index = int(request.GET.get('table_index'))
     query_tables = cache.get('query_tables')
     #print(query_tables[0])
-
-    return render(request, 'mysite/flight-information.html', {"order": query_tables[table_index]})
+    cache.set('order_flight',query_tables[table_index])
+    order_flight=cache.get('order_flight')
+    return render(request, 'mysite/flight-information.html', {"order": order_flight})
 
 def bestSeller(request):
     return render(request, 'mysite/best-seller.html')

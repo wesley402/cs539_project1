@@ -18,9 +18,8 @@ button{
 </style>
 <html>
     <div>
-        <button type="submit" name="">My Current Order</button>
-        <button type="submit" name="">My Order History</button>
-
+        <button type="submit"><a href="{% url current_order }">My Current Order</a></button>
+        <button type="submit"><a href="{% url history_order }">My Order History</a></button>
     </div>
 
 

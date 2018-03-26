@@ -15,7 +15,7 @@ button {
 </style>
 <html>
 <body>
-    <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    <form method="POST">{% csrf_token %}
     {% for i in range %}
     <fieldset>
         <legend><strong> Traveler {{i}} </strong></legend>
