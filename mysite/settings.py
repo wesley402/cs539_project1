@@ -87,6 +87,7 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+<<<<<<< HEAD
         'USER':'admin',
         'PASSWORD':'12345678',
         'HOST': 'mydatabase.cayksbsz2qlt.us-east-2.rds.amazonaws.com',
@@ -97,6 +98,18 @@ DATABASES = {
         #'PASSWORD':'3587666',
         #'HOST': '127.0.0.1',
         #'PORT': '3306',
+||||||| merged common ancestors
+
+=======
+<<<<<<< HEAD
+        'USER':'root',
+        'PASSWORD':'root123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+=======
+
+>>>>>>> master
+>>>>>>> c46c51981a7d3bb12ccf4f1a16a9ffe6e30250c3
     }
 }
 
