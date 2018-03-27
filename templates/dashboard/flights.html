@@ -1,5 +1,5 @@
 {% extends 'dashboard/base.html' %} {% block content%}
-<div class="container">
+<div class="container-fluid">
   <div class="row mt-4">
     <div class="col-lg">
       <div class="card">
@@ -10,61 +10,39 @@
           <table class="table table-hover">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">Airline</th>
-                <th scope="col">Flight Number</th>
-                <th scope="col">Origin</th>
-                <th scope="col">Destination</th>
-                <th scope="col">Departing Time</th>
-                <th scope="col">Arrival Time</th>
-                <th scope="col">Status</th>
+                <th class='text-left' scope="col">Airline</th>
+                <th class='text-center' scope="col">Flight Number</th>
+                <th class='text-center' scope="col">Status</th>
+                <th class='text-center' scope="col">Origin</th>
+                <th class='text-center' scope="col">Destination</th>
+                <th class='text-center' scope="col">Departing Time</th>
+                <th class='text-center' scope="col">Arrival Time</th>
+                <th class='text-center' scope="col">Arrive Day</th>
+                <th class='text-center' scope="col">Number of Stops</th>
+                <th class='text-center' scope="col">Working Days</th>
+                <th class='text-center' scope="col">Number of Seats</th>
+                <th class='text-center' scope="col">Fare</th>
+                <th class='text-right' scope="col">Fare Restriction</th>
               </tr>
             </thead>
             <tbody>
+              {% for flight in flights%}
               <tr>
-                <td>AA</td>
-                <td>1355</td>
-                <td>LGA</td>
-                <td>ORD</td>
-                <td>5:00</td>
-                <td>6:25</td>
-                <td class="text-danger">Delayed</td>
+                  <td class='text-center'>{{flight.airline_id}}</td>
+                  <td class='text-center'>{{flight.id}}</td>
+                  <td class='text-success text-center'>On Time</td>
+                  <td class='text-center'>{{flight.src_airport}}</td>
+                  <td class='text-center'>{{flight.dst_airport}}</td>
+                  <td class='text-center'>{{flight.src_time}}</td>
+                  <td class='text-center'>{{flight.dst_time}}</td>
+                  <td class='text-center'>{{flight.arrive_day}}</td>
+                  <td class='text-center'>{{flight.num_of_stops}}</td>
+                  <td class='text-center'>{{flight.working_days}}</td>
+                  <td class='text-center'>{{flight.num_of_seats}}</td>
+                  <td class='text-center' >{{flight.fare}}</td>
+                  <td class='text-right'>{{flight.fare_restriction}}</td>
               </tr>
-              <tr>
-                <td>United</td>
-                <td>1025</td>
-                <td>JFK</td>
-                <td>BWI</td>
-                <td>5:15</td>
-                <td>6:40</td>
-                <td class="text-danger">Delayed</td>
-              </tr>
-              <tr>
-                <td>United</td>
-                <td>1243</td>
-                <td>ORD</td>
-                <td>ATL</td>
-                <td>5:50</td>
-                <td>8:35</td>
-                <td class="text-success">On Time</td>
-              </tr>
-              <tr>
-                <td>AA</td>
-                <td>1807</td>
-                <td>BWI</td>
-                <td>LGA</td>
-                <td>6:00</td>
-                <td>7:45</td>
-                <td class="text-success">On Time</td>
-              </tr>
-              <tr>
-                <td>Delta</td>
-                <td>605</td>
-                <td>ATL</td>
-                <td>JFK</td>
-                <td>7:50</td>
-                <td>11:05</td>
-                <td class="text-danger">Delayed</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
