@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-with open('../my_credentials.txt','r') as credentials:
+with open('../aws_credentials.txt','r') as credentials:
     c = credentials.read().split(' ')
-    dbname, user, password, host = c[0], c[1], c[2], c[3]
+    dbname, host, user, password = c[0], c[1], c[2], c[3]
 
 DATABASES = {
     'default': {
