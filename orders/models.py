@@ -18,3 +18,24 @@ class Reservation(models.Model):
     customer_rep = models.CharField(max_length=25, blank=True)
     #customer_rep = models.ForeignKey(User,  to_field='username', on_delete=models.CASCADE)
     #username = models.ForeignKey(User,  to_field='username', on_delete=models.CASCADE)
+
+
+
+class Leg(models.Model):
+    CABIN_CLASS = (
+        ('E','Economy'),
+        ('PE','Premium Economy'),
+        ('B','Business'),
+        ('FC','First Class'),
+
+    )
+    reservation_no = models.CharField(max_length=100, blank=True)
+    leg_no = models.IntegerField(null=True)
+    airline_id = models.CharField(max_length=3, blank=True)
+    flight_no = models.IntegerField(null=False)
+    stop_no = models.IntegerField(null=True)
+    seat_num = models.IntegerField(null=True)
+    src_time = models.DateTimeField(blank=True)
+    dst_time = models.DateTimeField(blank=True)
+    cabin = models.CharField(max_length=20, blank=True, choices=CABIN_CLASS)
+    meal_preference = models.CharField(max_length=100, blank=True)
