@@ -22,6 +22,7 @@ def flight(request):
         cursor.callproc('getAllFlights')
         columns = [col[0] for col in cursor.description]
         result = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        print(result[0:])
         context = {
             "flights":result[:100]
         }
