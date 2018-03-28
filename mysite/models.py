@@ -25,7 +25,7 @@ class Route(models.Model):
     working_days = models.CharField(max_length=40, blank=True)
     fare = models.FloatField(null=True)
     fare_restriction = models.CharField(max_length=40, blank=True)
-    status = models.CharField(max_length=10, blank=True)
+    # status = models.CharField(max_length=10, blank=True)
     #airline_id = models.ForeignKey(Airline, related_name='airline_route_id', on_delete=models.CASCADE)
     #src_airport = models.ForeignKey(Airport, related_name='airport_route_id', on_delete=models.CASCADE)
     #dst_airport = models.ForeignKey(Airport, related_name='airport_id', on_delete=models.CASCADE)
