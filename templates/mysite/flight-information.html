@@ -20,11 +20,20 @@ h1 {
     <form action="{% url 'checkout' %}" method="GET">{% csrf_token %}
     <fieldset>
         <legend> YOUR FLIGHT ORDER </legend>
-        <li name="flight_no" value="{{order.flight_no}}">{{order.flight_no}}</li>
-        <li name="src_airport" value="{{order.src_airport}}">{{order.src_airport}}</li>
-        <li name="src_time" value="{{order.src_time}}">{{order.src_time}}</li>
-        <li name="dst_airport" value="{{order.dst_airport}}">{{order.dst_airport}}</li>
-        <li name="dst_time" value="{{order.dst_time}}">{{order.dst_time}}</li>
+        <span name="trip" value="{{trip}}"></span>
+        <span name="airline_id" value="{{table.0}}">Flight no: {{table.0}}{{table.1}}</span>
+        <span name="flight_no" value="{{table.1}}"></span></br>
+        <span name="src_airport" value="{{table.2}}">Route: {{table.2}}</span>
+        <span name="dash"> - </span>
+        <span name="dst_airport" value="{{table.3}}">{{table.3}}</span>
+        <span name="num_of_stops" value="0">(0 stop)</span></br>
+        <span name="src_time" value="{{table.4}}">Time: {{table.4}}</span>
+        <span name="dash"> - </span>
+        <span name="dst_time" value="{{table.5}}">{{table.5}}</span></br>
+        <span name="cabin" value="{{cabin}}">Class : {{request.session.cabin}}</span></br>
+        <span name="ppls">Number of passengers: {{request.session.nums_of_psgs}}</span></br>
+        <span name="booking">Booking fee: {{request.session.booking_fee}}</span></br>
+        <span name="price" value="{{table}}">Total Fare: {{request.session.total_fare}}</span></br></br>
         <div>
             <button type="submit" name=table_no value=""> CONFIRM YOUR FLIGHT</button>
         </div>
