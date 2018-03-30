@@ -18,16 +18,16 @@ button {
     <form method="POST">{% csrf_token %}
     {% for i in range %}
     <fieldset>
-        <legend><strong> Traveler {{i}} </strong></legend>
+        <legend><strong> Traveler {{forloop.counter}} </strong></legend>
         <label class="name" name="first-name-label">First name</label></br>
-        <input type="text" name="first-name" class="name" placeholder=""></br>
-        <label class="name" name="last-name-label">Last name</label></br>
-        <input type="text" name="last-name" class="name" placeholder="" ></br>
+        <input type="text" name="first_name{{forloop.counter0}}" class="name" placeholder=""></br>
+        <label class="name" name="last_name-label">Last name</label></br>
+        <input type="text" name="last_name{{forloop.counter0}}" class="name" placeholder="" ></br>
 
     </fieldset>
     {% endfor %}
     <div>
-        <button type="submit" name=table_index> CONFIRM YOUR BOOKING</button>
+        <button type="submit"> CONFIRM YOUR BOOKING</button>
     </div>
     </form>
 
