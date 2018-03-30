@@ -70,9 +70,9 @@ def searchResults(request):
         cursor.close()
         raw_oneStopOnewayTrip_lists = list(map(list, raw_oneStopOnewayTrip_tuples))
         oneStopOnewayTrip_lists = fareCalculator_2(raw_oneStopOnewayTrip_lists, diff_days, cabin)
+        cache.set('oneStopOnewayTrip_lists', oneStopOnewayTrip_lists)
         print(oneStopOnewayTrip_lists)
 
-        cache.set('oneStopOnewayTrip_lists', oneStopOnewayTrip_lists)
         return render(request, 'mysite/flight-search.html', {"oneStopOnewayTrip_lists": oneStopOnewayTrip_lists, "directOnewayTrip_lists": directOnewayTrip_lists})
 
 
@@ -90,7 +90,6 @@ def flightInfo(request):
     request.session['num_of_stops'] = request.GET.get('num_of_stops')
     if request.session['trip'] == 'oneway' and request.session['num_of_stops'] == '0':
         directOnewayTrip_lists = cache.get('directOnewayTrip_lists')
-        print(directOnewayTrip_lists)
         table_index = int(request.GET.get('table_index'))
         cache.set('order_direct_flight',directOnewayTrip_lists[table_index])
         order_direct_flight = cache.get('order_direct_flight')
@@ -99,6 +98,18 @@ def flightInfo(request):
         request.session['booking_fee'] = booking_fee
         request.session['total_fare'] = total_fare
         return render(request, 'mysite/flight-information.html', {"table": order_direct_flight})
+
+    elif request.session['trip'] == 'oneway' and request.session['num_of_stops'] == '1':
+        oneStopOnewayTrip_lists = cache.get('oneStopOnewayTrip_lists')
+        table_index = int(request.GET.get('table_index'))
+        cache.set('order_onestop_flight',oneStopOnewayTrip_lists[table_index])
+        order_onestop_flight = cache.get('order_onestop_flight')
+        booking_fee = order_onestop_flight[19] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
+        total_fare = order_onestop_flight[19] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        request.session['booking_fee'] = booking_fee
+        request.session['total_fare'] = total_fare
+        return render(request, 'mysite/flight-information.html', {"table": order_onestop_flight})
+
 
 def bestSeller(request):
     cursor = connection.cursor()
