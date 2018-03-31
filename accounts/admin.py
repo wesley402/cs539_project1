@@ -7,34 +7,34 @@ from django.contrib.auth.admin import UserAdmin
 from .models import Profile
 
 
-class ProfileInline(admin.StackedInline):
-    model = Profile
-    can_delete = False
-    verbose_name_plural = 'Profile'
-    fk_name = 'user'
+# class ProfileInline(admin.StackedInline):
+#     model = Profile
+#     can_delete = False
+#     verbose_name_plural = 'Profile'
+#     fk_name = 'user'
 
-class CustomUserAdmin(admin.ModelAdmin):
-  inlines = (ProfileInline, )
-    # form = CustomerForm
-  fields = (
-          'username',
-          'first_name',
-          'last_name',
-          'email',
-          'is_active'
-        )
-  list_display = (
-    'username',
-    'first_name',
-    'last_name',
-    'email',
-    'is_active'
-  )
+# class CustomUserAdmin(admin.ModelAdmin):
+#   inlines = (ProfileInline, )
+#     # form = CustomerForm
+#   fields = (
+#           'username',
+#           'first_name',
+#           'last_name',
+#           'email',
+#           'is_active'
+#         )
+#   list_display = (
+#     'username',
+#     'first_name',
+#     'last_name',
+#     'email',
+#     'is_active'
+#   )
 
   
 
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+# admin.site.unregister(User)
+# admin.site.register(User, CustomUserAdmin)
 
 
 

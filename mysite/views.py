@@ -310,7 +310,7 @@ def action(request):
         action = request.POST['actionSelect']
         print(action)
         if 'customer' in action.lower():
-            return redirect('manage_customers')
+            return redirect('/admin/auth/user/')
         elif 'reservation'in action.lower():
             return redirect('manage_reservations')
         elif 'flight' in action.lower():
