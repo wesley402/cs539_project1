@@ -8,6 +8,7 @@ from django.db import connection
 # Create your views here.
 def dashboard(request):
     context = {'user': request.user}
+    print(request.POST)
     return render(request, "dashboard/dashboard.html",context=context)
     
 def customer(request):

@@ -21,16 +21,17 @@ from . import views as home_views
 from django.views.generic import TemplateView
 from accounts import views as accounts_views
 from orders import views as orders_views
-from dashboard import views as dashboard_views
+from myadmin import views as myadmin_views
 
 urlpatterns = [
     path('', home_views.home, name='home'),
     path('admin/', admin.site.urls),
+    path('admin/action', myadmin_views.manage_customers, name='customers'),
 
-    path('dashboard/', dashboard_views.dashboard, name='dashboard'),
-    path('dashboard/customer', dashboard_views.customer, name='customer'),
-    path('dashboard/flight', dashboard_views.flight, name='flight'),
-    path('dashboard/reservation', dashboard_views.reservation, name='reservation'),
+    # path('dashboard/', dashboard_views.dashboard, name='dashboard'),
+    # path('dashboard/customer', dashboard_views.customer, name='customer'),
+    # path('dashboard/flight', dashboard_views.flight, name='flight'),
+    # path('dashboard/reservation', dashboard_views.reservation, name='reservation'),
 
     path('signin/',accounts_views.signin, name = 'signin'),
     path('signup/',accounts_views.signup, name = 'signup'),

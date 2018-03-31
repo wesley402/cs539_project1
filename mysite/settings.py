@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'mysite.apps.MysiteConfig',
     'orders.apps.OrdersConfig',
+    'myadmin.apps.MyadminConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
