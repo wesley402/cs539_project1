@@ -12,8 +12,13 @@ body, html {
 
 <html>
 <body>
+<h5><strong>Your departure date is: {{request.session.raw_dep_date}}</strong></h5>
 {% for table in directOnewayTrip_lists %}
+    {% if request.session.trip == 'oneway' %}
     <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    {% else %}
+    <form action="{% url 'flight-search-rtn' %}" method="GET">{% csrf_token %}
+    {% endif %}
     <fieldset>
         <input type="hidden" name="num_of_stops" value="0">
         <span name="airline_id">Flight no: {{table.0}}{{table.1}}</span>
@@ -36,7 +41,11 @@ body, html {
 {% endfor %}
 
 {% for table in oneStopOnewayTrip_lists %}
+    {% if request.session.trip == 'oneway' %}
     <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    {% else %}
+    <form action="{% url 'flight-search-rtn' %}" method="GET">{% csrf_token %}
+    {% endif %}
     <fieldset>
         <input type="hidden" name="num_of_stops" value="1">
         <span name="airline_id">Flight no: {{table.0}}{{table.1}} & {{table.9}}{{table.10}}</span>

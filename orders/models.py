@@ -16,6 +16,7 @@ class Reservation(models.Model):
     total_fare = models.FloatField(blank=True)
     booking_fee = models.FloatField(blank=True)
     customer_rep = models.CharField(max_length=25, blank=True)
+    num_of_psgs = models.IntegerField(null=True)
     #customer_rep = models.ForeignKey(User,  to_field='username', on_delete=models.CASCADE)
     #username = models.ForeignKey(User,  to_field='username', on_delete=models.CASCADE)
 

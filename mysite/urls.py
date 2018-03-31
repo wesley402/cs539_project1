@@ -24,7 +24,11 @@ urlpatterns = [
     path('profile/', accounts_views.profile, name='profile'),
     path('profile/edit', accounts_views.edit_profile, name='edit_profile'),
 
-    path('flight-search/', home_views.searchResults, name='flight-search'),
+    path('flight-search-dst/', home_views.searchResults, name='flight-search-dst'),
+    path('flight-search-rtn/', home_views.searchResults_rtn, name='flight-search-rtn'),
+
+    path('flight-information-round/', home_views.flightInfo_round, name='flight-information-round'),
+
     path('flight-information/', home_views.flightInfo, name='flight-information'),
     path('best-seller/', home_views.bestSeller, name='best-seller'),
 
@@ -32,5 +36,6 @@ urlpatterns = [
     path('order/', orders_views.order, name='order'),
     path('order/history-order', orders_views.history_order, name='history_order'),
     path('order/current-order', orders_views.current_order, name='current_order'),
+    #path('order/order-detail', orders_views.order_detail, name='order_detail'),
 
 ]
