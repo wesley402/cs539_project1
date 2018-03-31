@@ -14,7 +14,7 @@
 {% block content %}
 <div id="content-main">
 
-	<form method="POST" action="action">{% csrf_token %}
+	<form method="POST" action="/myadmin/">{% csrf_token %}
 		<label for="colorSelect">Selection action:  </label>
 		<select type="text" id="actionSelect" name="actionSelect">
 			<option selected>Manage Customer Accounts</option>

@@ -23,10 +23,14 @@ from accounts import views as accounts_views
 from orders import views as orders_views
 from myadmin import views as myadmin_views
 
+from myadmin.admin import admin_site
+
 urlpatterns = [
     path('', home_views.home, name='home'),
     path('admin/', admin.site.urls),
-    path('admin/action', myadmin_views.manage_customers, name='customers'),
+    # path('admin/action', myadmin_views.manage_customers, name='customers'),
+
+    path('admin/myadmin/', myadmin_views.manage_customers, name='customers'),
 
     # path('dashboard/', dashboard_views.dashboard, name='dashboard'),
     # path('dashboard/customer', dashboard_views.customer, name='customer'),
