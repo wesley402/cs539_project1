@@ -46,27 +46,27 @@ p {
 				<div class="clearfix"> </div>
 				<div class="resp-tabs-container">
 					<div class="tab-1 resp-tab-content roundtrip">
-						<form action="{% url 'flight-search' %}" method="GET">{% csrf_token %}
+						<form action="{% url 'flight-search-dst' %}" method="GET">{% csrf_token %}
 							<div class="from">
 								<h3>From</h3>
-								<input type="text" name="from" class="city1" placeholder="Type Departure City" required="">
+								<input type="text" name="from" class="city1" placeholder="Type Departure Airport" required="">
 							</div>
 							<div class="to">
 								<h3>To</h3>
-								<input type="text" name="to" class="city2" placeholder="Type Destination City" required="">
+								<input type="text" name="to" class="city2" placeholder="Type Destination Airport" required="">
 							</div>
 							<div class="clear"></div>
 							<div class="date">
 								<div class="depart">
 									<h3>Depart</h3>
-									<input  id="datepicker" name="Text" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									<input  id="datepicker" name="dep_date" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
 									<span class="checkbox1">
 										<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>Flexible with date</label>
 									</span>
 								</div>
 								<div class="return">
 									<h3>Return</h3>
-									<input  id="datepicker1" name="Text" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									<input  id="datepicker1" name="rtn_date" type="text" value="{% now "SHORT_DATE_FORMAT" %}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
 									<span class="checkbox1">
 										<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>Flexible with date</label>
 									</span>
@@ -75,27 +75,34 @@ p {
 							</div>
 							<div class="class">
 								<h3>Class</h3>
-								<select id="w3_country1" onchange="change_country(this.value)" class="frm-field required">
-									<option value="null">Economy</option>
-									<option value="null">Premium Economy</option>
-									<option value="null">Business</option>
-									<option value="null">First class</option>
+								<select id="w3_country1" name="cabin" onchange="change_country(this.value)" class="frm-field required">
+									<option value="economy">Economy</option>
+									<option value="premium economy">Premium Economy</option>
+									<option value="business">Business</option>
+									<option value="first">First class</option>
 								</select>
 
 							</div>
 							<div class="clear"></div>
+
 							<div class="numofppl">
 								<div class="adults">
-									<h3>Adult:(12+ yrs)</h3>
+									<h3>Passengers</h3>
 									<div class="quantity">
-										<div class="quantity-select">
-											<div class="entry value-minus">&nbsp;</div>
-											<div class="entry value"><span>1</span></div>
-											<div class="entry value-plus active">&nbsp;</div>
-										</div>
+										<select name="numofpsgs">
+			  								<option value="1">1</option>
+			  								<option value="2">2</option>
+			  								<option value="3">3</option>
+			  								<option value="4">4</option>
+											<option value="5">5</option>
+			  								<option value="6">6</option>
+			  								<option value="7">7</option>
+			  								<option value="8">8</option>
+											<option value="9">9</option>
+										</select>
 									</div>
 								</div>
-								<div class="child">
+							<!--	<div class="child">
 									<h3>Child:(2-11 yrs)</h3>
 									<div class="quantity">
 										<div class="quantity-select">
@@ -105,22 +112,23 @@ p {
 										</div>
 									</div>
 								</div>
+							-->
 								<div class="clear"></div>
 							</div>
 							<div class="clear"></div>
-							<button type="submit" name = "trip" value="oneway">Search Flights</button>
+							<button type="submit" name = "trip" value="roundtrip">Search Flights</button>
 						</form>
 					</div>
 
 					<div class="tab-1 resp-tab-content oneway">
-						<form action="{% url 'flight-search' %}" method="GET">{% csrf_token %}
+						<form action="{% url 'flight-search-dst' %}" method="GET">{% csrf_token %}
 							<div class="from">
 								<h3>From</h3>
-								<input type="text" name="from" class="city1" placeholder="Type Departure City" required="">
+								<input type="text" name="from" class="city1" placeholder="Type Departure Airport" required="">
 							</div>
 							<div class="to">
 								<h3>To</h3>
-								<input type="text" name="to" class="city2" placeholder="Type Destination City" required="">
+								<input type="text" name="to" class="city2" placeholder="Type Destination Airport" required="">
 							</div>
 							<div class="clear"></div>
 							<div class="date">

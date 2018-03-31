@@ -13,7 +13,7 @@ body, html {
 <html>
 <body>
 {% for table in directOnewayTrip_lists %}
-    <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    <form action="{% url 'flight-information-round' %}" method="GET">{% csrf_token %}
     <fieldset>
         <input type="hidden" name="num_of_stops" value="0">
         <span name="airline_id">Flight no: {{table.0}}{{table.1}}</span>
@@ -29,14 +29,14 @@ body, html {
         <span name="cabin">Class : {{request.session.cabin}}</span></br>
         <span name="price">Fare: {{table.7}}</span></br></br>
         <div>
-            <button type="submit" name=table_index value="{{forloop.counter0}}">SELECT</button>
+            <button type="submit" name=rtn_table_index value="{{forloop.counter0}}">SELECT</button>
         </div>
     </fieldset>
     </form>
 {% endfor %}
 
 {% for table in oneStopOnewayTrip_lists %}
-    <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
+    <form action="{% url 'flight-information-round' %}" method="GET">{% csrf_token %}
     <fieldset>
         <input type="hidden" name="num_of_stops" value="1">
         <span name="airline_id">Flight no: {{table.0}}{{table.1}} & {{table.9}}{{table.10}}</span>
@@ -55,7 +55,7 @@ body, html {
         <span name="cabin">Class : {{request.session.cabin}}</span></br>
         <span name="price">Fare: {{table.19}}</span></br></br>
         <div>
-            <button type="submit" name=table_index value="{{forloop.counter0}}">SELECT</button>
+            <button type="submit" name=rtn_table_index value="{{forloop.counter0}}">SELECT</button>
         </div>
     </fieldset>
     </form>
