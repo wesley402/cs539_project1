@@ -215,7 +215,19 @@ def checkout(request):
 def order(request):
     return render(request, 'orders/order.html')
 
+
 def history_order(request):
+    if request.method == 'POST':
+        if 'detail' in request.POST:
+            order_no = request.POST['detail']
+            print(order_no)
+            cursor = connection.cursor()
+            cursor.callproc('getOrderDetail', [order_no])
+            travel_tuples = cursor.fetchall()
+            cursor.close()
+            print(travel_tuples)
+            return render(request, 'orders/order_detail.html', {'travel_tuples': travel_tuples})
+
     orderLists = Reservation.objects.filter(username=request.user.username)
     if orderLists.exists():
         return render(request, 'orders/history_order.html', {'orderLists': orderLists})
@@ -225,7 +237,13 @@ def current_order(request):
     if request.method == 'POST':
             if 'detail' in request.POST:
                 order_no = request.POST['detail']
-                return render(request, 'orders/order_detail.html')
+                print(order_no)
+                cursor = connection.cursor()
+                cursor.callproc('getOrderDetail', [order_no])
+                travel_tuples = cursor.fetchall()
+                cursor.close()
+                print(travel_tuples)
+                return render(request, 'orders/order_detail.html', {'travel_tuples': travel_tuples})
 
             if 'cancel' in request.POST:
                 order_no = request.POST['cancel']

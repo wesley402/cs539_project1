@@ -50,5 +50,6 @@ urlpatterns = [
     path('order/', orders_views.order, name='order'),
     path('order/history-order', orders_views.history_order, name='history_order'),
     path('order/current-order', orders_views.current_order, name='current_order'),
+    #path('order/order-detail', orders_views.order_detail, name='order_detail'),
 
 ]
