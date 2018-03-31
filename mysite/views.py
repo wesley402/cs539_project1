@@ -38,11 +38,11 @@ def searchResults(request):
     if(trip == 'oneway'):
         city1  = request.GET.get('from')
         city2  = request.GET.get('to')
-        nums_of_psgs = request.GET.get('numofpsgs')
+        num_of_psgs = request.GET.get('numofpsgs')
         cabin = request.GET.get('cabin')
         raw_dep_date = request.GET.get('dep_date')
 
-        request.session['nums_of_psgs'] = nums_of_psgs
+        request.session['num_of_psgs'] = num_of_psgs
         request.session['cabin'] = cabin
         request.session['trip'] = trip
         request.session['raw_dep_date'] = raw_dep_date
@@ -79,7 +79,7 @@ def searchResults(request):
     elif(trip == 'roundtrip'): # search first ticket
         city1  = request.GET.get('from')
         city2  = request.GET.get('to')
-        nums_of_psgs = request.GET.get('numofpsgs')
+        num_of_psgs = request.GET.get('numofpsgs')
         cabin = request.GET.get('cabin')
         raw_dep_date = request.GET.get('dep_date')
         raw_rtn_date = request.GET.get('rtn_date')
@@ -87,7 +87,7 @@ def searchResults(request):
         request.session['city1'] = city1
         request.session['city2'] = city2
 
-        request.session['nums_of_psgs'] = nums_of_psgs
+        request.session['num_of_psgs'] = num_of_psgs
         request.session['cabin'] = cabin
         request.session['trip'] = trip
         request.session['raw_dep_date'] = raw_dep_date
@@ -145,8 +145,8 @@ def flightInfo(request):
         table_index = int(request.GET.get('table_index'))
         cache.set('order_direct_flight',directOnewayTrip_lists[table_index])
         order_direct_flight = cache.get('order_direct_flight')
-        booking_fee = order_direct_flight[7] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
-        total_fare = order_direct_flight[7] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        booking_fee = order_direct_flight[7] * int(request.session['num_of_psgs']) * BOOKING_FEE_RATE
+        total_fare = order_direct_flight[7] * int(request.session['num_of_psgs']) * (1 + BOOKING_FEE_RATE)
         request.session['booking_fee'] = booking_fee
         request.session['total_fare'] = total_fare
         return render(request, 'mysite/flight-information.html', {"table": order_direct_flight})
@@ -156,8 +156,8 @@ def flightInfo(request):
         table_index = int(request.GET.get('table_index'))
         cache.set('order_onestop_flight',oneStopOnewayTrip_lists[table_index])
         order_onestop_flight = cache.get('order_onestop_flight')
-        booking_fee = order_onestop_flight[19] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
-        total_fare = order_onestop_flight[19] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        booking_fee = order_onestop_flight[19] * int(request.session['num_of_psgs']) * BOOKING_FEE_RATE
+        total_fare = order_onestop_flight[19] * int(request.session['num_of_psgs']) * (1 + BOOKING_FEE_RATE)
         request.session['booking_fee'] = booking_fee
         request.session['total_fare'] = total_fare
         return render(request, 'mysite/flight-information.html', {"table": order_onestop_flight})
@@ -174,32 +174,32 @@ def flightInfo_round(request):
         dst_table_index = int(request.session['dst_table_index'])
         cache.set('dst_order_flight',dst_directOnewayTrip_lists[dst_table_index])
         dst_order_flight = cache.get('dst_order_flight')
-        dst_booking_fee = dst_order_flight[7] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
-        dst_total_fare = dst_order_flight[7] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        dst_booking_fee = dst_order_flight[7] * int(request.session['num_of_psgs']) * BOOKING_FEE_RATE
+        dst_total_fare = dst_order_flight[7] * int(request.session['num_of_psgs']) * (1 + BOOKING_FEE_RATE)
 
     else:
         dst_oneStopOnewayTrip_lists = cache.get('dst_oneStopOnewayTrip_lists')
         dst_table_index = int(request.session['dst_table_index'])
         cache.set('dst_order_flight',dst_oneStopOnewayTrip_lists[dst_table_index])
         dst_order_flight = cache.get('dst_order_flight')
-        dst_booking_fee = dst_order_flight[19] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
-        dst_total_fare = dst_order_flight[19] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        dst_booking_fee = dst_order_flight[19] * int(request.session['num_of_psgs']) * BOOKING_FEE_RATE
+        dst_total_fare = dst_order_flight[19] * int(request.session['num_of_psgs']) * (1 + BOOKING_FEE_RATE)
 
     if request.session['rtn_num_of_stops'] == '0':
         rtn_directOnewayTrip_lists = cache.get('rtn_directOnewayTrip_lists')
         rtn_table_index = int(request.GET.get('rtn_table_index'))
         cache.set('rtn_order_flight',rtn_directOnewayTrip_lists[rtn_table_index])
         rtn_order_flight = cache.get('rtn_order_flight')
-        rtn_booking_fee = rtn_order_flight[7] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
-        rtn_total_fare = rtn_order_flight[7] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        rtn_booking_fee = rtn_order_flight[7] * int(request.session['num_of_psgs']) * BOOKING_FEE_RATE
+        rtn_total_fare = rtn_order_flight[7] * int(request.session['num_of_psgs']) * (1 + BOOKING_FEE_RATE)
 
     else:
         rtn_oneStopOnewayTrip_lists = cache.get('rtn_oneStopOnewayTrip_lists')
         rtn_table_index = int(request.GET.get('rtn_table_index'))
         cache.set('rtn_order_flight',rtn_oneStopOnewayTrip_lists[rtn_table_index])
         rtn_order_flight = cache.get('rtn_order_flight')
-        rtn_booking_fee = rtn_order_flight[19] * int(request.session['nums_of_psgs']) * BOOKING_FEE_RATE
-        rtn_total_fare = rtn_order_flight[19] * int(request.session['nums_of_psgs']) * (1 + BOOKING_FEE_RATE)
+        rtn_booking_fee = rtn_order_flight[19] * int(request.session['num_of_psgs']) * BOOKING_FEE_RATE
+        rtn_total_fare = rtn_order_flight[19] * int(request.session['num_of_psgs']) * (1 + BOOKING_FEE_RATE)
 
     booking_fee = dst_booking_fee + rtn_booking_fee
     total_fare = dst_total_fare + rtn_total_fare

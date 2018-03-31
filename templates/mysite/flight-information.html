@@ -21,6 +21,7 @@ h1 {
     <form action="{% url 'checkout' %}" method="GET">{% csrf_token %}
     <fieldset>
         <legend> YOUR FLIGHT ORDER </legend>
+        <span>Departure date: {{reqeust.session.raw_dep_date}}</span></br>
         <span name="airline_id" value="{{table.0}}">Flight no: {{table.0}}{{table.1}}</span>
         <span name="flight_no" value="{{table.1}}"></span></br>
         <span name="src_airport" value="{{table.2}}">Route: {{table.2}}</span>
@@ -44,6 +45,7 @@ h1 {
     <form action="{% url 'checkout' %}" method="GET">{% csrf_token %}
     <fieldset>
         <legend> YOUR FLIGHT ORDER </legend>
+        <span>Departure date: {{reqeust.session.raw_dep_date}}</span></br>
         <span name="airline_id">Flight no: {{table.0}}{{table.1}} & {{table.9}}{{table.10}}</span>
         <span name="flight_no"></span></br>
         <span name="src_airport">Route: {{table.2}}</span>

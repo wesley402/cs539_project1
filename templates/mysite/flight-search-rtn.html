@@ -12,6 +12,7 @@ body, html {
 
 <html>
 <body>
+<h5><strong>Your return date is: {{request.session.raw_rtn_date}}</strong></h5>    
 {% for table in directOnewayTrip_lists %}
     <form action="{% url 'flight-information-round' %}" method="GET">{% csrf_token %}
     <fieldset>

@@ -34,7 +34,8 @@ def checkout(request):
                 passengers = ppls,
                 total_fare = float(request.session['total_fare']),
                 booking_fee = float(request.session['booking_fee']),
-                customer_rep ='wesley')
+                customer_rep ='wesley',
+                num_of_psgs= int(request.session['num_of_psgs']))
 
             if request.session['num_of_stops'] == '0':
 
@@ -100,7 +101,8 @@ def checkout(request):
                 passengers = ppls,
                 total_fare = float(request.session['total_fare']),
                 booking_fee = float(request.session['booking_fee']),
-                customer_rep ='wesley')
+                customer_rep ='wesley',
+                num_of_psgs= int(request.session['num_of_psgs']))
 
             # Store dst trip to database
             if request.session['dst_num_of_stops'] == '0':
@@ -222,7 +224,7 @@ def history_order(request):
             order_no = request.POST['detail']
             print(order_no)
             cursor = connection.cursor()
-            cursor.callproc('getOrderDetail', [order_no])
+            cursor.callproc('getOrderDetail', [request.user.username, order_no])
             travel_tuples = cursor.fetchall()
             cursor.close()
             print(travel_tuples)
@@ -239,7 +241,7 @@ def current_order(request):
                 order_no = request.POST['detail']
                 print(order_no)
                 cursor = connection.cursor()
-                cursor.callproc('getOrderDetail', [order_no])
+                cursor.callproc('getOrderDetail', [request.user.username,order_no])
                 travel_tuples = cursor.fetchall()
                 cursor.close()
                 print(travel_tuples)
