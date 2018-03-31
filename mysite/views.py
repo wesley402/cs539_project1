@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import RequestContext, loader
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from .models import Route
+from accounts.models import Profile
+from django.contrib.auth.models import User
 from django.core.cache import cache
 from datetime import datetime
 from django.db import connection
@@ -181,3 +184,48 @@ def fareCalculator_2(trip_lists, diff_days, cabin):
 
 def isFlightFull(): # return the list of full flight
     return False
+
+
+
+
+def action(request):
+    if request.method == 'POST':
+        action = request.POST['actionSelect']
+        print(action)
+        if 'customer' in action.lower():
+            return redirect('manage_customers')
+        elif 'reservation'in action.lower():
+            return redirect('manage_reservations')
+        elif 'flight' in action.lower():
+            return redirect('flights')
+        elif 'report' in action.lower():
+            return redirect('reports')
+        else:
+            return redirect('admin')
+    else:
+        return redirect('admin')
+        
+# Create your views here.
+def manage_customers(request):
+    context={
+        'title': 'Manage Customers'
+    }
+    return render(request,"admin/manage_customers.html",context=context)
+
+def manage_reservations(request):
+    context={
+        'title': 'Manage Reservations'
+    }
+    return render(request,"admin/manage_reservations.html",context=context)
+
+def view_flights(request):
+    context={
+        'title': 'View Flights'
+    }
+    return render(request,"admin/flights.html",context=context)
+
+def generate_reports(request):
+    context={
+        'title': 'Reporting'
+    }
+    return render(request,"admin/reporting.html",context=context)

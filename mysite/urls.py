@@ -1,18 +1,3 @@
-"""mysite URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import include, path
 from django.contrib import admin
 from django.conf import settings
@@ -21,21 +6,17 @@ from . import views as home_views
 from django.views.generic import TemplateView
 from accounts import views as accounts_views
 from orders import views as orders_views
-from myadmin import views as myadmin_views
-
-from myadmin.admin import admin_site
+# from myadmin import views as myadmin_views
 
 urlpatterns = [
     path('', home_views.home, name='home'),
-    path('admin/', admin.site.urls),
-    # path('admin/action', myadmin_views.manage_customers, name='customers'),
-
-    path('admin/myadmin/', myadmin_views.manage_customers, name='customers'),
-
-    # path('dashboard/', dashboard_views.dashboard, name='dashboard'),
-    # path('dashboard/customer', dashboard_views.customer, name='customer'),
-    # path('dashboard/flight', dashboard_views.flight, name='flight'),
-    # path('dashboard/reservation', dashboard_views.reservation, name='reservation'),
+    path('admin/', admin.site.urls, name='admin'),
+    
+    path('admin/action/', home_views.action, name="action"),
+    path('admin/manage_customers/', home_views.manage_customers, name="manage_customers"),
+    path('admin/manage_reservations/', home_views.manage_reservations, name='manage_reservations'),
+    path('admin/view_flights/', home_views.view_flights, name='flights'),
+    path('admin/reports/', home_views.generate_reports, name='reports'),
 
     path('signin/',accounts_views.signin, name = 'signin'),
     path('signup/',accounts_views.signup, name = 'signup'),
