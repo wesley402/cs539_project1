@@ -6,7 +6,7 @@ from django.template import RequestContext, loader
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from .models import Route
 from django.core.cache import cache
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.db import connection
 from itertools import chain
 from django import template
@@ -49,31 +49,43 @@ def searchResults(request):
 
         dep_date = datetime.strptime(raw_dep_date, '%m/%d/%Y')
         weekday = dep_date.strftime('%w') # date to weekday
-
-        cursor = connection.cursor()
-        cursor.callproc('getDirectOnewayTrip', [city1, city2, weekday])
-        raw_directOnewayTrip_tuples = cursor.fetchall()
-        cursor.close()
-
-        # change to date object
         curr_date = datetime.strptime(str(datetime.now().date()), '%Y-%m-%d')
         diff_days = (dep_date - curr_date).days
 
-        raw_directOnewayTrip_lists = list(map(list, raw_directOnewayTrip_tuples))
-        directOnewayTrip_lists = fareCalculator_a(raw_directOnewayTrip_lists, diff_days, cabin)
+
+        directOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+        oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+
+        flex_day = 0
+        if not directOnewayTrip_lists and not oneStopOnewayTrip_lists:
+            flex_day = 1
+            directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+            oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+            if not directOnewayTrip_lists and not oneStopOnewayTrip_lists:
+                flex_day = -1
+                directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+                oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+
+
+        if not directOnewayTrip_lists and not oneStopOnewayTrip_lists:
+            message = "Sorry, we can't find any flight on your designated date or next day or before a day!!!!!!!!!!!"
+            return render(request, 'message.html',{'message' : message})
+
+        new_dep_date = dep_date + timedelta(days=flex_day)
+        request.session['raw_dep_date'] = new_dep_date.strftime('%m/%d/%Y')
+
+
         cache.set('directOnewayTrip_lists', directOnewayTrip_lists)
-        #return render(request, 'mysite/flight-search.html', {"directOnewayTrip_lists": directOnewayTrip_lists})
-
-        cursor = connection.cursor()
-        cursor.callproc('getOnestopOnewayTrip', [city1, city2, weekday])
-        raw_oneStopOnewayTrip_tuples = cursor.fetchall()
-        cursor.close()
-
-        raw_oneStopOnewayTrip_lists = list(map(list, raw_oneStopOnewayTrip_tuples))
-        oneStopOnewayTrip_lists = fareCalculator_b(raw_oneStopOnewayTrip_lists, diff_days, cabin)
         cache.set('oneStopOnewayTrip_lists', oneStopOnewayTrip_lists)
 
-        return render(request, 'mysite/flight-search-dst.html', {"oneStopOnewayTrip_lists": oneStopOnewayTrip_lists, "directOnewayTrip_lists": directOnewayTrip_lists})
+    #    if not directOnewayTrip_lists: print(directOnewayTrip_lists)
+    #    if not oneStopOnewayTrip_lists: print(oneStopOnewayTrip_lists)
+
+
+        return render(request, 'mysite/flight-search-dst.html',
+                        {   "oneStopOnewayTrip_lists": oneStopOnewayTrip_lists,
+                            "directOnewayTrip_lists": directOnewayTrip_lists,
+                            "flex_day": str(flex_day)})
 
 
     elif(trip == 'roundtrip'): # search first ticket
@@ -99,13 +111,34 @@ def searchResults(request):
         curr_date = datetime.strptime(str(datetime.now().date()), '%Y-%m-%d')
         diff_days = (dep_date - curr_date).days
 
-        dst_directOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getDirectOnewayTrip')
-        cache.set('dst_directOnewayTrip_lists', dst_directOnewayTrip_lists)
+        dst_directOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+        dst_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
 
-        dst_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getOnestopOnewayTrip')
+        flex_day = 0
+        if not dst_directOnewayTrip_lists and not dst_oneStopOnewayTrip_lists:
+            flex_day = 1
+            dst_directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+            dst_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+            if not dst_directOnewayTrip_lists and not dst_oneStopOnewayTrip_lists:
+                flex_day = -1
+                dst_directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+                dst_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+
+
+        if not dst_directOnewayTrip_lists and not dst_oneStopOnewayTrip_lists:
+            message = "Sorry, we can't find any flight on your designated departure date or next day or before a day!!!!!!!!!!!"
+            return render(request, 'message.html',{'message' : message})
+
+        new_dep_date = dep_date + timedelta(days=flex_day)
+        request.session['raw_dep_date'] = new_dep_date.strftime('%m/%d/%Y')
+
+        cache.set('dst_directOnewayTrip_lists', dst_directOnewayTrip_lists)
         cache.set('dst_oneStopOnewayTrip_lists', dst_oneStopOnewayTrip_lists)
 
-        return render(request, 'mysite/flight-search-dst.html', {"oneStopOnewayTrip_lists": dst_oneStopOnewayTrip_lists, "directOnewayTrip_lists": dst_directOnewayTrip_lists})
+        return render(request, 'mysite/flight-search-dst.html', {
+                        "oneStopOnewayTrip_lists": dst_oneStopOnewayTrip_lists,
+                        "directOnewayTrip_lists": dst_directOnewayTrip_lists,
+                        "flex_day": str(flex_day)})
 
 
 
@@ -127,13 +160,34 @@ def searchResults_rtn(request): # search second ticket
     curr_date = datetime.strptime(str(datetime.now().date()), '%Y-%m-%d')
     diff_days = (dep_date - curr_date).days
 
-    rtn_directOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getDirectOnewayTrip')
-    cache.set('rtn_directOnewayTrip_lists', rtn_directOnewayTrip_lists)
+    rtn_directOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+    rtn_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
 
-    rtn_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getOnestopOnewayTrip')
+    if not rtn_directOnewayTrip_lists and not rtn_oneStopOnewayTrip_lists:
+        flex_day = 1
+        rtn_directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+        rtn_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+        if not rtn_directOnewayTrip_lists and not rtn_oneStopOnewayTrip_lists:
+            flex_day = -1
+            rtn_directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+            rtn_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
+
+
+    if not rtn_directOnewayTrip_lists and not rtn_oneStopOnewayTrip_lists:
+        message = "Sorry, we can't find any flight on your designated return date or next day or before a day!!!!!!!!!!!"
+        return render(request, 'message.html',{'message' : message})
+
+    new_dep_date = dep_date + timedelta(days=flex_day)
+    request.session['raw_dep_date'] = new_dep_date.strftime('%m/%d/%Y')
+
+    cache.set('rtn_directOnewayTrip_lists', rtn_directOnewayTrip_lists)
     cache.set('rtn_oneStopOnewayTrip_lists', rtn_oneStopOnewayTrip_lists)
 
-    return render(request, 'mysite/flight-search-rtn.html', {"oneStopOnewayTrip_lists": rtn_oneStopOnewayTrip_lists, "directOnewayTrip_lists": rtn_directOnewayTrip_lists})
+
+    return render(request, 'mysite/flight-search-rtn.html', {
+                    "oneStopOnewayTrip_lists": rtn_oneStopOnewayTrip_lists,
+                    "directOnewayTrip_lists": rtn_directOnewayTrip_lists,
+                    "flex_day": str(flex_day)})
 
 def flightInfo(request):
 
@@ -171,6 +225,7 @@ def flightInfo_round(request):
 
     if request.session['dst_num_of_stops'] == '0':
         dst_directOnewayTrip_lists = cache.get('dst_directOnewayTrip_lists')
+        print(dst_directOnewayTrip_lists)
         dst_table_index = int(request.session['dst_table_index'])
         cache.set('dst_order_flight',dst_directOnewayTrip_lists[dst_table_index])
         dst_order_flight = cache.get('dst_order_flight')
@@ -208,9 +263,9 @@ def flightInfo_round(request):
 
     return render(request, 'mysite/flight-information-round.html', {'dst_table': dst_order_flight, 'rtn_table': rtn_order_flight})
 
-def queryOnewayTrip(city1, city2, weekday, diff_days, cabin, procName):
+def queryOnewayTrip(city1, city2, weekday, diff_days, cabin, procName, num_of_psgs, dep_date):
     cursor = connection.cursor()
-    cursor.callproc(procName, [city1, city2, weekday])
+    cursor.callproc(procName, [city1, city2, weekday, num_of_psgs ,dep_date])
     raw_onewayTrip_tuples = cursor.fetchall()
     cursor.close()
     raw_onewayTrip_lists = list(map(list, raw_onewayTrip_tuples))

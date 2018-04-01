@@ -12,7 +12,11 @@ body, html {
 
 <html>
 <body>
-<h5><strong>Your return date is: {{request.session.raw_rtn_date}}</strong></h5>    
+{% if flex_day == '0' %}
+<h5><strong>Your return date is: {{request.session.raw_rtn_date}}</strong></h5>
+{% else %}
+<h5><strong>Sorry, we don't have flight on your designated date. Our suggested return date is: {{request.session.raw_dep_date}}</strong></h5>
+{% endif %}
 {% for table in directOnewayTrip_lists %}
     <form action="{% url 'flight-information-round' %}" method="GET">{% csrf_token %}
     <fieldset>
