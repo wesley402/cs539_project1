@@ -90,14 +90,14 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-        'NAME': dbname,
-        'USER': user,
-        'PASSWORD': password,
-        'HOST': host,
-        # 'NAME': 'dbproject',
-        # 'USER': 'root',
-        # 'PASSWORD': 'root123',
-        # 'HOST': 'localhost',
+        # 'NAME': dbname,
+        # 'USER': user,
+        # 'PASSWORD': password,
+        # 'HOST': host,
+        'NAME': 'dbproject',
+        'USER': 'root',
+        'PASSWORD': 'root123',
+        'HOST': 'localhost',
         'PORT': 3306,
 
     }
