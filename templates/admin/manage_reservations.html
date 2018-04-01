@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %} 
+{% load i18n static %} 
+
+{% block branding %}
+<h1 id="site-name" style="display:inline">
+	<a href="{% url 'admin:index' %}">Manager Page</a>
+</h1>
+{% endblock %}
+
+{% block content%}
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Reservation Number</th>
+      <th scope="col">Customer Last Name</th>
+      <th scope="col">Customer Account Number</th>
+      <th scope="col">Flight</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
+
+{% endblock content%}

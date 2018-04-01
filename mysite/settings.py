@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'mysite.apps.MysiteConfig',
     'orders.apps.OrdersConfig',
+    # 'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -86,7 +87,6 @@ with open('../aws_credentials.txt','r') as credentials:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
@@ -94,6 +94,10 @@ DATABASES = {
         'USER': user,
         'PASSWORD': password,
         'HOST': host,
+        # 'NAME': 'dbproject',
+        # 'USER': 'root',
+        # 'PASSWORD': 'root123',
+        # 'HOST': 'localhost',
         'PORT': 3306,
 
     }
