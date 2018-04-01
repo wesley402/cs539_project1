@@ -29,7 +29,25 @@ class CustomUserAdmin(admin.ModelAdmin):
     'email',
     'is_active'
   )
-  
+
+class RouteModelAdmin(admin.ModelAdmin):
+
+  list_display = (
+    'id',
+    'airline_id',
+    'flight_no',
+    'src_airport',
+    'dst_airport',
+    'num_of_seats',
+    'num_of_stops',
+    'src_time',
+    'dst_time',
+    'arrive_day',
+    'working_days',
+    'fare',
+    'flying_time',
+  )
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register([Airport,Airline,Route,Leg,Reservation])
+admin.site.register(Route, RouteModelAdmin)
