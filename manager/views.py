@@ -18,6 +18,12 @@ def action(request):
             return redirect('get_best_customer')
         elif 'List All Flights for a Given Airport' == action:
             return redirect('list_flights_for_a_airport')
+        elif 'Get Sales Report by a Month' == action:
+            return redirect('get_sales_report_by_month')
+        elif 'Get Most Active Flights' == action:
+            return redirect('get_most_active_flights')
+        elif 'Get Customers on a Flight' == action:
+            return redirect('get_customers_on_a_flight')
         else:
             return redirect('/admin')
     else:
@@ -145,3 +151,58 @@ def list_flights_for_a_airport(request):
         return render(request,"admin/flights_at_airport.html",context=context)
 
     return render(request,"admin/flights_at_airport.html")
+
+def get_sales_report_by_month(request):
+    if request.method == 'GET':
+        tuples = None
+        year = request.GET.get('year')
+        month = request.GET.get('month')
+        cursor = connection.cursor()
+        cursor.callproc('getSalesReport',[month, year])
+        tuples = cursor.fetchall()
+        cursor.close()
+
+        context={
+        'title': 'Get Sales Report by a Particular Month',
+        'tuples': tuples
+        }
+
+        return render(request,"admin/get_sales_report_by_month.html",context=context)
+
+    return render(request,"admin/get_sales_report_by_month.html")
+
+def get_most_active_flights(request):
+    if request.method == 'GET':
+        tuples = None
+        month = request.GET.get('month')
+        cursor = connection.cursor()
+        cursor.callproc('getActiveFlights',[month])
+        tuples = cursor.fetchall()
+        cursor.close()
+
+        context={
+        'title': 'Get Most Active Flights',
+        'tuples': tuples
+        }
+
+        return render(request,"admin/get_most_active_flights.html",context=context)
+
+    return render(request,"admin/get_most_active_flights.html")
+
+def get_customers_on_a_flight(request):
+    if request.method == 'GET':
+        tuples = None
+        flight_no = request.GET.get('flight_no')
+        cursor = connection.cursor()
+        cursor.callproc('getCustomersOnFlight',[flight_no])
+        tuples = cursor.fetchall()
+        cursor.close()
+
+        context={
+        'title': 'Get Customers on a Flight',
+        'tuples': tuples
+        }
+
+        return render(request,"admin/get_customers_on_a_flight.html",context=context)
+
+    return render(request,"admin/get_customers_on_a_flight.html")

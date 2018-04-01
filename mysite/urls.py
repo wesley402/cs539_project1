@@ -20,6 +20,11 @@ urlpatterns = [
     path('admin/generate_sales_reports/', manager_views.generate_sales_reports, name='generate_sales_reports'),
     path('admin/get_best_customer/', manager_views.get_best_customer, name='get_best_customer'),
     path('admin/list_flights_for_a_airport/', manager_views.list_flights_for_a_airport, name='list_flights_for_a_airport'),
+    path('admin/get_sales_report_by_month/', manager_views.get_sales_report_by_month, name='get_sales_report_by_month'),
+    path('admin/get_most_active_flights/', manager_views.get_most_active_flights, name='get_most_active_flights'),
+    path('admin/get_customers_on_a_flight/', manager_views.get_customers_on_a_flight, name='get_customers_on_a_flight'),
+
+
 
     path('signin/',accounts_views.signin, name = 'signin'),
     path('signup/',accounts_views.signup, name = 'signup'),
