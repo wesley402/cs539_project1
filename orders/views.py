@@ -15,7 +15,7 @@ def checkout(request):
         now = datetime.now()
         reserv_no = 'TX' + now.strftime('%Y%m%d%H%M%S%f')
         ppls = ''
-        for i in range(int(request.session['nums_of_psgs'])):
+        for i in range(int(request.session['num_of_psgs'])):
             first_name = 'first_name' + str(i)
             last_name = 'last_name' + str(i)
             ppls = ppls + request.POST[first_name] + ' ' + request.POST[last_name] + ','
@@ -211,8 +211,8 @@ def checkout(request):
 
 
     else:
-        nums_of_psgs = int(request.session['nums_of_psgs'])
-        return render(request, 'orders/checkout.html', {'range':range(nums_of_psgs)})
+        num_of_psgs = int(request.session['num_of_psgs'])
+        return render(request, 'orders/checkout.html', {'range':range(num_of_psgs)})
 
 def order(request):
     return render(request, 'orders/order.html')
