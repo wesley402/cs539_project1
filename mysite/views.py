@@ -186,6 +186,7 @@ def searchResults_rtn(request): # search second ticket
     rtn_directOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
     rtn_oneStopOnewayTrip_lists = queryOnewayTrip(city1, city2, weekday, diff_days, request.session['cabin'], 'getOnestopOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
 
+    flex_day = 0
     if not rtn_directOnewayTrip_lists and not rtn_oneStopOnewayTrip_lists:
         flex_day = 1
         rtn_directOnewayTrip_lists = queryOnewayTrip(city1, city2, str(int(weekday)+flex_day), diff_days-flex_day, request.session['cabin'], 'getDirectOnewayTrip', int(request.session['num_of_psgs']), dep_date.strftime('%Y-%m-%d'))
