@@ -24,6 +24,8 @@ def action(request):
             return redirect('get_most_active_flights')
         elif 'Get Customers on a Flight' == action:
             return redirect('get_customers_on_a_flight')
+        elif 'On-Time or Delay' == action:
+            return redirect('ontime_delay')
         else:
             return redirect('/admin')
     else:
@@ -72,12 +74,6 @@ def manage_reservations(request):
 
 
 
-
-def view_flights(request):
-    context={
-        'title': 'View Flights'
-    }
-    return render(request,"admin/flights.html",context=context)
 
 def generate_sales_reports(request):
     if request.method == 'GET':
@@ -206,3 +202,21 @@ def get_customers_on_a_flight(request):
         return render(request,"admin/get_customers_on_a_flight.html",context=context)
 
     return render(request,"admin/get_customers_on_a_flight.html")
+
+
+def ontime_delay(request):
+    if request.method == 'GET':
+        tuples = None
+        cursor = connection.cursor()
+        cursor.callproc('getOntimeDelay')
+        tuples = cursor.fetchall()
+        cursor.close()
+
+        context={
+        'title': 'List of flights on-time or delayed',
+        'tuples': tuples
+        }
+
+        return render(request,"admin/ontime_delay.html",context=context)
+
+    return render(request,"admin/ontime_delay.html")

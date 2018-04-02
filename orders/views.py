@@ -84,8 +84,9 @@ def checkout(request):
                     cabin = request.session['cabin'],
                     seat_num = random.randint(0, 100),
                     )
-            return HttpResponse("<h>Your Order is Accecpted !!!!!!</h>")
-
+            message = "Your Order Succeed!!!!!!!!!!!"
+            return render(request, 'message.html',{'message' : message})
+            
         else:#roundtrip
             raw_dep_date = request.session['raw_dep_date']
             raw_rtn_date = request.session['raw_dep_date']
@@ -202,7 +203,8 @@ def checkout(request):
                     seat_num = random.randint(0, 100),
                     )
 
-            return HttpResponse("<h>Your Order is Accecpted !!!!!!</h>")
+            message = "Your Order Succeed!!!!!!!!!!!"
+            return render(request, 'message.html',{'message' : message})
 
 
 
