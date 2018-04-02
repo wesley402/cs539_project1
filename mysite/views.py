@@ -13,6 +13,8 @@ from datetime import datetime, timedelta
 from django.db import connection
 from itertools import chain
 from django import template
+from django.utils.safestring import mark_safe
+import json
 
 register = template.Library()
 
@@ -31,9 +33,27 @@ def add(value, arg):
 
 
 def home(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM mysite_airport;')
+        results = airports_fetchall(cursor)
+    # json_data = json.dumps(results,indent=2,ensure_ascii=False)
+    results = mark_safe(results)
+    context = template.Context({'airports': results}, autoescape=False)
+
     return render(request, 'mysite/index.html', {
         'foo': 'bar',
+        'airports': results
     }, content_type='html')
+
+def airports_fetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    columns[0] = 'value'
+    columns[2] = 'label'
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
 
 def searchResults(request):
 
