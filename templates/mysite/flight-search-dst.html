@@ -12,7 +12,11 @@ body, html {
 
 <html>
 <body>
+{% if flex_day == '0' %}
 <h5><strong>Your departure date is: {{request.session.raw_dep_date}}</strong></h5>
+{% else %}
+<h5><strong>Sorry, we don't have flight on your designated date. Our suggested departure date is: {{request.session.raw_dep_date}}</strong></h5>
+{% endif %}
 {% for table in directOnewayTrip_lists %}
     {% if request.session.trip == 'oneway' %}
     <form action="{% url 'flight-information' %}" method="GET">{% csrf_token %}
@@ -21,8 +25,9 @@ body, html {
     {% endif %}
     <fieldset>
         <input type="hidden" name="num_of_stops" value="0">
-        <span name="airline_id">Flight no: {{table.0}}{{table.1}}</span>
-        <span name="flight_no"></span></br>
+        <span>I/D: {{table.10}}</span></br>
+        <span>Flight no: {{table.0}}{{table.1}}</span></br>
+        <span>Flying time: {{table.11|time:"H"}} h {{table.11|time:"i"}} m</span></br>
         <span name="src_airport">Route: {{table.2}}</span>
         <span name="dash"> - </span>
         <span name="dst_airport">{{table.3}}</span>
@@ -48,8 +53,9 @@ body, html {
     {% endif %}
     <fieldset>
         <input type="hidden" name="num_of_stops" value="1">
-        <span name="airline_id">Flight no: {{table.0}}{{table.1}} & {{table.9}}{{table.10}}</span>
-        <span name="flight_no"></span></br>
+        <span>I/D: {{table.21}}</span></br>
+        <span >Flight no: {{table.0}}{{table.1}} & {{table.9}}{{table.10}}</span></br>
+        <span>Flying time: {{table.22}} h </span></br>
         <span name="src_airport">Route: {{table.2}}</span>
         <span name="dash"> - </span>
         <span> {{table.20|time:"H"}} h {{table.20|time:"i"}} m</span>

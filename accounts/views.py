@@ -20,8 +20,6 @@ def signin(request):
         login(request, user)
         if next:
             return redirect(next)
-        if user.is_superuser:
-            return redirect("dashboard")
         return redirect('/')
     return render(request, "accounts/form.html", {"form":form, "title": title})
 

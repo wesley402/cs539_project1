@@ -6,17 +6,25 @@ from . import views as home_views
 from django.views.generic import TemplateView
 from accounts import views as accounts_views
 from orders import views as orders_views
+from manager import views as manager_views
 # from myadmin import views as myadmin_views
 
 urlpatterns = [
     path('', home_views.home, name='home'),
     path('admin/', admin.site.urls, name='admin'),
-    
-    path('admin/action/', home_views.action, name="action"),
-    path('admin/manage_customers/', home_views.manage_customers, name="manage_customers"),
-    path('admin/manage_reservations/', home_views.manage_reservations, name='manage_reservations'),
-    path('admin/view_flights/', home_views.view_flights, name='flights'),
-    path('admin/reports/', home_views.generate_reports, name='reports'),
+
+    path('admin/action/', manager_views.action, name="action"),
+    path('admin/manage_customers/', manager_views.manage_customers, name="manage_customers"),
+    path('admin/manage_reservations/', manager_views.manage_reservations, name='manage_reservations'),
+    path('admin/generate_sales_reports/', manager_views.generate_sales_reports, name='generate_sales_reports'),
+    path('admin/get_best_customer/', manager_views.get_best_customer, name='get_best_customer'),
+    path('admin/list_flights_for_a_airport/', manager_views.list_flights_for_a_airport, name='list_flights_for_a_airport'),
+    path('admin/get_sales_report_by_month/', manager_views.get_sales_report_by_month, name='get_sales_report_by_month'),
+    path('admin/get_most_active_flights/', manager_views.get_most_active_flights, name='get_most_active_flights'),
+    path('admin/get_customers_on_a_flight/', manager_views.get_customers_on_a_flight, name='get_customers_on_a_flight'),
+    path('admin/ontime_delay/', manager_views.ontime_delay, name='ontime_delay'),
+
+
 
     path('signin/',accounts_views.signin, name = 'signin'),
     path('signup/',accounts_views.signup, name = 'signup'),
