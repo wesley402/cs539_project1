@@ -48,6 +48,12 @@ class RouteModelAdmin(admin.ModelAdmin):
     'flying_time',
   )
 
+  list_filter = (
+    'num_of_seats',
+    'working_days',
+    'airline_id',
+  )
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Route, RouteModelAdmin)

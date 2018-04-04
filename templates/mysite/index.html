@@ -31,6 +31,43 @@ p {
 	<meta name="keywords" content="Flight Ticket Booking  Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
+	<!-- AutoComplete -->
+	<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script>
+		var airports = {
+					source: {{airports|safe}}
+			 }
+		$(function() {
+			 $( "#autocomplete-from-rt" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-to-rt" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-from-ow" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-to-ow" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-from-mc1" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-to-mc1" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-from-mc2" ).autocomplete(airports);
+		});
+		$(function() {
+			 $( "#autocomplete-to-mc2" ).autocomplete(airports);
+		});
+ </script>
+ <style>
+	 .ui-menu-item {
+		background-color: white;
+	}
+ </style>
 </head>
 <body>
  	<h1>Flight Ticket Booking</h1>
@@ -47,13 +84,13 @@ p {
 				<div class="resp-tabs-container">
 					<div class="tab-1 resp-tab-content roundtrip">
 						<form action="{% url 'flight-search-dst' %}" method="GET">{% csrf_token %}
-							<div class="from">
+							<div class="from ui-widget">
 								<h3>From</h3>
-								<input type="text" name="from" class="city1" placeholder="Type Departure Airport" required="">
+								<input id="autocomplete-from-rt" type="text" name="from" class="city1" placeholder="Type Departure Airport or City" required="">
 							</div>
 							<div class="to">
 								<h3>To</h3>
-								<input type="text" name="to" class="city2" placeholder="Type Destination Airport" required="">
+								<input id="autocomplete-to-rt" type="text" name="to" class="city2" placeholder="Type Destination Airport or City" required="">
 							</div>
 							<div class="clear"></div>
 							<div class="date">
@@ -120,13 +157,13 @@ p {
 
 					<div class="tab-1 resp-tab-content oneway">
 						<form action="{% url 'flight-search-dst' %}" method="GET">{% csrf_token %}
-							<div class="from">
+							<div class="from ui-widget">
 								<h3>From</h3>
-								<input type="text" name="from" class="city1" placeholder="Type Departure Airport" required="">
+								<input id="autocomplete-from-ow" type="text" name="from" class="city1" placeholder="Type Departure Airport or City" required="">
 							</div>
-							<div class="to">
+							<div class="to ui-widget">
 								<h3>To</h3>
-								<input type="text" name="to" class="city2" placeholder="Type Destination Airport" required="">
+								<input id="autocomplete-to-ow" type="text" name="to" class="city2" placeholder="Type Destination Airport or City" required="">
 							</div>
 							<div class="clear"></div>
 							<div class="date">
@@ -186,13 +223,13 @@ p {
 					<div class="tab-1 resp-tab-content multicity">
 
 									<form action="#" method="post">{% csrf_token %}
-										<div class="from">
+										<div class="from ui-widget">
 											<h3>From</h3>
-											<input type="text" name="city" class="city1" placeholder="Type Departure City" required="">
+											<input id="autocomplete-from-mc1" type="text" name="city" class="city1" placeholder="Type Departure City or Airport" required="">
 										</div>
-										<div class="to">
+										<div class="to ui-widget">
 											<h3>To</h3>
-											<input type="text" name="city" class="city2" placeholder="Type Destination City" required="">
+											<input id="autocomplete-to-mc1" type="text" name="city" class="city2" placeholder="Type Destination City or Airport" required="">
 										</div>
 										<div class="clear"></div>
 										<div class="date">
@@ -222,13 +259,13 @@ p {
 
 								<div class="l_g spcl">
 									<form action="#" method="post" class="blackbg">{% csrf_token %}
-										<div class="from">
+										<div class="from ui-widget">
 											<h3>From</h3>
-											<input type="text" name="city" class="city1" placeholder="Type Departure City" required="">
+											<input id="autocomplete-from-mc2" type="text" name="city" class="city1" placeholder="Type Departure City or Airport" required="">
 										</div>
-										<div class="to">
+										<div class="to ui-widget">
 											<h3>To</h3>
-											<input type="text" name="city" class="city2" placeholder="Type Destination City" required="">
+											<input id="autocomplete-to-mc2" type="text" name="city" class="city2" placeholder="Type Destination City or Airport" required="">
 										</div>
 										<div class="clear"></div>
 										<div class="date">
@@ -311,7 +348,6 @@ p {
 										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
 										divUpd.text(newVal);
 									});
-
 									$('.value-minus').on('click', function(){
 										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
 										if(newVal>=1) divUpd.text(newVal);
