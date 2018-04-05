@@ -13,26 +13,26 @@ class ProfileInline(admin.StackedInline):
     fk_name = 'user'
 
 class CustomUserAdmin(admin.ModelAdmin):
-  inlines = (ProfileInline, )
+    inlines = (ProfileInline, )
     # form = CustomerForm
-  fields = (
+    fields = (
           'username',
           'first_name',
           'last_name',
           'email',
           'is_active'
         )
-  list_display = (
+    list_display = (
     'username',
     'first_name',
     'last_name',
     'email',
     'is_active'
-  )
+    )
 
 class RouteModelAdmin(admin.ModelAdmin):
 
-  list_display = (
+    list_display = (
     'id',
     'airline_id',
     'flight_no',
@@ -46,14 +46,34 @@ class RouteModelAdmin(admin.ModelAdmin):
     'working_days',
     'fare',
     'flying_time',
-  )
+    )
 
-  list_filter = (
+    list_filter = (
     'num_of_seats',
     'working_days',
     'airline_id',
-  )
+    )
 
+
+
+class AirportModelAdmin(admin.ModelAdmin):
+
+    list_display = (
+    'id',
+    'name',
+    'city',
+    'country',
+    )
+
+    list_filter = (
+    'name',
+    'city',
+    'country',
+    )
+    search_fields = (
+    'country',
+    )
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Route, RouteModelAdmin)
+admin.site.register(Airport, AirportModelAdmin)
