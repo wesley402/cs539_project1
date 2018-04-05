@@ -16,9 +16,9 @@ h1 {
 }
 
 table {
-    width: 100%;
-    margin-left: 140px;
-    font-size:20px;
+    font-size:12px;
+    margin-left:20px;
+    width: 95%;
 }
 
 </style>
@@ -33,24 +33,39 @@ table {
 </head>
 <body>
 
-    <div style=""class='col-sm-6 col-sm-offset-3'>
 
         <h1>Our Best-seller Flight</h1></br>
 
         <table>
+        <thead>
           <tr>
             <th>Rank</th>
+            <th>Airline Name</th>
             <th>Flight No</th>
+            <th>Departure Place</th>
+            <th>Departure Airport</th>
+            <th>Destination Place</th>
+            <th>Destination Airport</th>
+            <th>Reserved Times</th>
+
           </tr>
+        </thead>
           {% for list in bestSellers %}
+          <tbody>
           <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{list.0}}{{list.1}}</td>
+            <td>{{list.0}}</td>
+            <td>{{list.1}}</td>
+            <td>{{list.2}}</td>
+            <td>{{list.3}}</td>
+            <td>{{list.4}}</td>
+            <td>{{list.5}}</td>
+            <td>{{list.6}}</td>
           </tr>
+          </tbody>
           {% endfor %}
         </table>
 
-    </div>
 
 </body>
 </html>
